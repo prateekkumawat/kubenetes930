@@ -1,0 +1,8 @@
+name: php-web-development 
+
+services: 
+  phpweb: 
+    container_name: phpweb
+    build: .
+    ports: 
+      - 8091:80 

@@ -1,0 +1,8 @@
+name: mear-app-docker
+
+services: 
+  mearn_app:
+    container_name: mearn-app
+    build: . 
+    ports: 
+      - 8084:80

@@ -1,0 +1,18 @@
+PS C:\Users\Prateek\Downloads\docker-app-930batch> cd .\Dockerfile-learning-example1\
+PS C:\Users\Prateek\Downloads\docker-app-930batch\Dockerfile-learning-example1> ls
+
+
+    Directory: C:\Users\Prateek\Downloads\docker-app-930batch\Dockerfile-learning-example1
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        19-09-2025     09:57            173 Dockerfile
+-a----        19-09-2025     09:49             51 notes.txt
+
+
+PS C:\Users\Prateek\Downloads\docker-app-930batch\Dockerfile-learning-example1> docker build -t example:1 .
+[+] Building 162.1s (9/9) FINISHED                                                                    docker:desktop-linux 
+ => [internal] load build definition from Dockerfile                                                                  0.1s 
+ => => transferring dockerfile: 212B                                                                                  0.0s 
+ => [internal] load metadata for docker.io/library/ubuntu:latest      

@@ -1,0 +1,31 @@
+# kubectl run nginx --image=nginx:latest --port=80  --dry-run=client -o yaml > pod1.yaml
+# kubectl run nginx --image=nginx:latest --port=80  --dry-run=server -o yaml > pod1.yaml
+
+apiVersion: v1                 ### api version tell us what kubernetes resource manage or create apps/v1  
+kind: Pod                      ### api exist resource pod repica set storage volume 
+metadata:                      ### info part identity data information name namespace label 
+  name: myapp
+  labels:
+    app.kubernetes.io/name: myapp
+spec:                          ### specification details  containers volume taint tolerations affinity env 
+  containers:
+  - name: myapp
+    image: <Image>
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: <Port>
+
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp
+spec:
+  selector:
+    app: myapp
+  ports:
+  - port: <Port>
+    targetPort: <Target Port>

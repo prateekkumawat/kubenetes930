@@ -1,0 +1,21 @@
+# https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2Fwindows+package+manager 
+
+2 CPUs or more
+2GB of free memory
+20GB of free disk space
+Internet connection
+Docker-desktop 
+
+- using powershell with admin access 
+- winget install Kubernetes.minikube 
+- it will install minikube in your system 
+
+Note::: Docker-Desktop must be up  and running. 
+
+- kubectl install in windows 
+
+https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/#install-kubectl-binary-on-windows-via-direct-download-or-curl
+
+download your kubectl command 
+
+setup you enviornment variables for kubectl command 

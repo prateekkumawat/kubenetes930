@@ -1,0 +1,53 @@
+name: wordpress-application-manage
+
+services: 
+  database: 
+    container_name: database
+    image: mysql:latest
+    ports: 
+      - 3306:3306 
+    volumes: 
+      - databasevol:/var/lib/mysql/
+    environment:
+      MYSQL_ROOT_PASSWORD: /run/secrets/db_root_pass
+      MYSQL_USER: prateek
+      MYSQL_PASSWORD: /run/secrets/db_pass
+      MYSQL_DATABASE: wpdata
+    secrets: 
+      - db_root_pass
+      - db_pass  
+
+  wordpress: 
+    container_name: wordpress
+    image: wordpress:latest
+    ports: 
+      - 8000:80 
+    volumes: 
+      - wpvol:/var/www/html/ 
+    environment: 
+      WORDPRESS_DB_HOST: database
+      WORDPRESS_DB_NAME: wpdata
+      WORDPRESS_DB_USER: prateek 
+      WORDPRESS_DB_PASSWORD: /run/secrets/db_pass
+    secrets: 
+      - db_pass
+     
+
+  pma: 
+    container_name: pma
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 8001:80
+    environment:
+      PMA_HOST: database
+
+volumes:
+  wpvol:
+  databasevol:
+
+secrets: 
+  db_pass: 
+    file: ./.databasepassword.txt
+  db_root_pass:    
+    file: ./.databasepassword.txt

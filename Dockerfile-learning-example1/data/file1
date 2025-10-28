@@ -1,0 +1,16 @@
+=> [3/4] RUN apt install -y nginx                                                                                    6.0s 
+ => [4/4] RUN mkdir /prateek                                                                                          0.3s 
+ => [3/4] RUN apt install -y nginx                                                                                    6.0s 
+ => [4/4] RUN mkdir /prateek                                                                                          0.3s 
+ => exporting to image                                                                                                2.4s 
+ => [4/4] RUN mkdir /prateek                                                                                          0.3s 
+ => exporting to image                                                                                                2.4s 
+ => exporting to image                                                                                                2.4s 
+ => => exporting layers                                                                                               1.8s 
+ => => exporting manifest sha256:3ad9af1ef4aaa8fa7e0a3e0bd2a4a085f269a0329162de645fd1a2d71e788f52                     0.0s 
+ => => exporting config sha256:0b326ce4d62587de2866e66c345582f0012058f72fe258d2049a5d344e5f36ac                       0.0s 
+ => => exporting attestation manifest sha256:b98c7e975360ce3f3c3e4a8edb1510a584ffcb06c1a1758017c970b871f66a01         0.0s 
+ => => exporting manifest list sha256:b932c5fbe5a17b508df903dd696d22a5548529d49d67347bed07ecbe1e8c86f2                0.0s 
+ => => naming to docker.io/library/example:1                                                                          0.0s 
+ => => unpacking to docker.io/library/example:1                                                                       0.5s 
+ => => unpacking to docker.io/library/example:1                                                                       0.5s 

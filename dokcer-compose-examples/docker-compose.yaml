@@ -1,0 +1,42 @@
+name: learning-compose-project
+
+services:
+  webapp:
+    container_name: webapp
+    image: redhat/ubi9:latest
+    volumes: 
+      - webvol:/mnt
+    ports:
+      - 8080:80
+      - 8081:81
+      - 8082:82
+    command: /bin/bash -c 'sleep 10000'
+    restart: always 
+    depends_on: 
+      - database
+      - webexpose 
+
+  webexpose: 
+    container_name: webexpose
+    image: nginx:1.29-alpine-slim
+    ports: 
+      - 8000:80  
+    volumes: 
+      - webexpo:/usr/share/nginx/html/ 
+    depends_on: 
+      - database
+      
+  database: 
+    container_name: database
+    image: mysql:latest
+    volumes: 
+      - datavol:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: redhat
+      MYSQL_USER: prateek
+      MYSQL_PASSWORD: redhat123
+
+volumes:
+  datavol:    
+  webexpo:
+  webvol:

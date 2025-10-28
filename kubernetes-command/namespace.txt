@@ -1,0 +1,38 @@
+# namespace :::: 
+
+- isolated env in kubernetes. all the pods and resources always use namespace 
+- kubernetes namespace  
+ 1. kube-system :::: kubernetes cluster services etcd apiserver schduler etc. 
+ 2. all the pod having in namespaces
+ 3. kubernetes uses default namespace and if you not define with resource it will create in this namespace.
+
+ # create a pod 
+ kubectl run nginx --image=nginx --port=80
+
+ because of we not specified any namespace. so it created in default namespace. 
+ kubectl create ns testing
+ kubectl run nginx-testing --image=nginx --port=80 -n testing 
+
+ pod::: smallest compute unit is pod. pod is maintain containers. 
+ storage, network , security and stuff resources. 
+ 
+ # kubectl describe pod nginx-testing -n testing 
+ # kubectl exec -it nginx-testing -n testing -- bash 
+
+ # if you want to run os container like ubi , ubuntu alpine or any other. 
+   - kubectl run ubuntu --image=ubuntu:latest --port=80 --command -- sleep 10000
+   - kubectl run redhat  --image=redhat/ubi9:latest --port=80 --command "sleep 10000"
+
+ service :::: its help to expose your pods in kubernetes. 
+    - ClusterIP --- with in a cluster machine access you apps. 
+    - NodePort  --- with in a cluster and node ip's based you can access your application. 
+    - LoadBalancer --- Loadbalancer ip can able to manage ; cloud based or your on-premises. 
+    - InGress --- external services resource   
+    # kubectl get svc 
+    # kubectl expose pod nginx --type=NodePort 
+     you can access with your http://workernodeip:port 
+
+     
+     # kubectl expose pod nginx --type=ClusterIP 
+you can access within your cluster machine using your clusterip so link will be http://clusterip:port  
+*** Note***     30000-32767 this is node port range on your worker machine. 

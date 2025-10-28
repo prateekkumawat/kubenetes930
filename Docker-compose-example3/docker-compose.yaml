@@ -1,0 +1,9 @@
+name: villa website project 
+
+services: 
+   villa_web: 
+      container_name: villa_frontend
+      build: .
+      ports: 
+        - 8090:80
+        

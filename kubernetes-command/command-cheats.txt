@@ -1,0 +1,12 @@
+# get your nodes 
+- kubectl get node 
+- kubectl describe node node_name 
+   // show details of node like ip hostname, resurces, running containers/pods, taints, labels, events and many more. 
+
+# get your pods 
+- kubectl get pod -A 
+- kubectl describe pod_name 
+- kubectl get pod -A -o wide // describe full details like container ip and container host 
+- kubectl run nginx --image=nginx:latest --port=80  // run pod using nginx image 
+- kubectl exec -it nginx -- bash
+- kubectl delete pod nginx 

@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: example1 
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-example-1
+  namespace: example1
+  labels:
+    app.kubernetes.io/name: myapp-example-1
+    app.kubernetes.io/apptype: example1-apps
+spec:
+  containers:
+  - name: myapp-example-nginx
+    image: nginx:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "300m"
+    ports:
+      - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-example-1-svc
+  namespace: example1
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: myapp-example-1
+  ports:
+  - port: 81
+    targetPort: 80
