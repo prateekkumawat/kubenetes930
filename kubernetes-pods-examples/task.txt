@@ -1,0 +1,3 @@
+setup DockerImage using redhat/ubi9 or ubuntu setup achache server on this. build a image using Dockerfile and push
+over dockerhub in public repository. 
+build a pod and deployment using this images. 
