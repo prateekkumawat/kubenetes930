@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: namespace
+kind: Namespace
 metadata:
   name: villa
 ---
@@ -9,10 +9,10 @@ metadata:
   name: villa-web
   namespace: villa
 spec:
-  replica: 2
+  replicas: 2
   selector:
     matchLabels:
-      app: villa-web
+       app: villa-web
   template:
     metadata:
       labels:
