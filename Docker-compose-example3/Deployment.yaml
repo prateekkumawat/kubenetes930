@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: namespace
+metadata:
+  name: villa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: villa-web
+  namespace: villa
+spec:
+  replica: 2
+  selector:
+    matchLabels:
+      app: villa-web
+  template:
+    metadata:
+      labels:
+        app: villa-web
+    spec:
+      containers:
+      - name: villa-web
+        image: prateekkumawat/kube:webimg
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: villa-web-svc
+  namespace: villa
+spec:
+  selector:
+    app: villa-web
+  ports:
+  - port: 80
+    targetPort: 80
