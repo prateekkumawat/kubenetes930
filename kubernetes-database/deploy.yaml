@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: database
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-app
+  namespace: database
+  labels:
+    app: mysql
+    apptype: database
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+      apptype: database
+  template:
+    metadata:
+      labels:
+        app: mysql
+        apptype: database
+    spec:
+      containers:
+      - name: mysql-app
+        image: mysql:latest
+        env: 
+          name: MYSQL_ROOT_PASSWORD
+          value: redhat
+        resources:
+          request: 
+            memory: "300Mi"
+            cpu: "500m"
+          limits:
+            memory: "500Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 3306
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-app-svc
+  namespace: database
+spec:
+  selector:
+    app: mysql
+  ports:
+  - port: 3306
+    targetPort: 3306

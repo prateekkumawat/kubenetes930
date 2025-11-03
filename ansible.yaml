@@ -1,0 +1,37 @@
+- name: Install {{ pkg }} package 
+  yum: 
+    name: "{{ pkg }}" 
+    state: latest 
+
+- name: create {{ web_path }} directory 
+  file: 
+    path: "{{ web_path }}" 
+    state: directory 
+
+- name: copy configuration 
+  template: 
+    src: template/httpd.conf.j2 
+    dest: /etc/httpd/conf.d/web.conf
+
+- name: create index.html 
+  file: 
+    path: "{{ web_path }}/index.html" 
+    state: touch
+
+- name: copy content 
+  copy:
+    dest: "{{ web_path }}" 
+    src: files/index.html 
+
+- name: start services 
+  service:
+    name: httpd 
+    state: started 
+    enabled: true 
+    
+- name: allow http rules 
+  firewalld: 
+    service: http
+    immediate: true 
+    state: enabled 
+    permanent: true    
