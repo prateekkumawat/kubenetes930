@@ -39,8 +39,9 @@ spec:
               key: user
         - name: MYSQL_PASSWORD
           valueFrom:
-            name: mysql-app-user-secret
-            key: password      
+            secretKeyRef:
+              name: mysql-app-user-secret
+              key: password      
         resources:
           requests: 
             memory: "300Mi"
