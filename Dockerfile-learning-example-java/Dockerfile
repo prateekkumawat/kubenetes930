@@ -11,7 +11,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # === Stage 2: Run the application ===
-FROM openjdk:17-jdk-slim
+FROM openjdk:17.0.2-jdk-slim
 
 # Copy built jar from builder stage
 COPY --from=builder /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
