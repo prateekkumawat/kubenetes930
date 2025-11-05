@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: springapp
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: springapp-secret
+  namespace: springapp
+type: Opaque
+data:
+  password: ZmxlY3RyYWc=
+  user: ZGJ1c2Vy
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springapp
+  namespace: springapp
+  labels: 
+    app: springapp
+    apptype: java
+spec:
+  selector:
+    matchLabels:
+      app: springapp
+  template:
+    metadata:
+      labels:
+        app: springapp
+    spec:
+      containers:
+      - name: springapp
+        image: prateekkumawat/kube:springapp-version-1.0.0
+        env: 
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://mysql-app-svc.database.svc.cluster.local:3306/userdb
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: springapp-secret
+              key: user
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: springapp-secret
+              key: password
+        - name: SPRING_JPA_HIBERNATE_DDL_AUTO 
+          value: "update"
+        - name: SPRING_JPA_SHOW_SQL
+          value: "true"
+        - name: SERVER_PORT
+          value: "8080"
+        resources:
+          requests: 
+            memory: "500Mi"
+            cpu: "500m"
+          limits:
+            memory: "700Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springapp-svc
+  namespace: springapp
+spec:
+  selector:
+    app: springapp
+  type: NodePort  
+  ports:
+  - port: 8080
+    targetPort: 8080
