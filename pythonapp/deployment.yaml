@@ -12,7 +12,7 @@ metadata:
 type: Opaque
 data:
   password: ZmxlY3RyYWc=
-  user: ZGJ1c2Vy>
+  user: ZGJ1c2Vy
 
 ---
 apiVersion: apps/v1
