@@ -47,7 +47,7 @@ spec:
               name: python-app-secret
               key: password      
         - name: MYSQL_HOST
-          value: mysql-app-svc.databasse.svc.cluster.local
+          value: mysql-app-svc.database.svc.cluster.local
         - name: MYSQL_DB
           value: userdb    
         resources:
