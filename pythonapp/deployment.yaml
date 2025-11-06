@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: python-apps
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: python-app-secret
+  namespace: python-apps
+type: Opaque
+data:
+  password: ZmxlY3RyYWc=
+  user: ZGJ1c2Vy>
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-apps-deploy
+  labels:
+    name: python-apps-deploy
+    app: python
+  namespace: python-apps
+spec:
+  selector:
+    matchLabels:
+      app: python
+  template:
+    metadata:
+      labels:
+        app: python
+    spec:
+      containers:
+      - name: python-apps-deploy
+        image: prateekkumawat/pythonapps:apps-v1.0.1
+        env: 
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: python-app-secret
+              key: user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: python-app-secret
+              key: password      
+        - name: MYSQL_HOST
+          value: mysql-app-svc.databasse.svc.cluster.local
+        - name: MYSQL_DB
+          value: userdb    
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "400m"
+          limits:
+            memory: "800Mi"
+            cpu: "800m"
+        ports:
+        - containerPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-apps-svc
+  namespace: python-apps
+spec:
+  selector:
+    app: python
+  type: NodePort  
+  ports:
+  - port: 5000
+    targetPort: 5000
+
