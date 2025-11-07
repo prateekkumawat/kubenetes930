@@ -8,7 +8,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nfs-store-pv
-  label:
+  labels:
     app: datastore
 spec:
   capacity:
@@ -30,7 +30,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: nfs-store-pvc
   namespace: voltest
-  label: 
+  labels: 
     app: datastore
 spec:
   resources:
@@ -46,7 +46,7 @@ kind: Deployment
 metadata:
   name: datastore-pod
   namespace: voltest
-  label: 
+  labels: 
     app: datastore
 spec:
   selector:
