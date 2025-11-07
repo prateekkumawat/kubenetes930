@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: voltest
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-store-pv
+  label:
+    app: datastore
+spec:
+  capacity:
+    storage: 1G
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /data/store
+    server: 172.31.11.245
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-store-pvc
+  namespace: voltest
+  label: 
+    app: datastore
+spec:
+  resources:
+    requests:
+      storage: 1G
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datastore-pod
+  namespace: voltest
+  label: 
+    app: datastore
+spec:
+  selector:
+    matchLabels:
+      app: datastore
+  template:
+    metadata:
+      labels:
+        app: datastore
+    spec:
+      volumes: 
+      - name: datapath
+        persistentVolumeClaim:
+          claimName: nfs-store-pvc
+      containers:
+      - name: datastore-app
+        image: ubuntu:latest
+        resources:
+          requests:
+             memory: "100Mi"
+             cpu: "200m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        command:
+          - sleep
+          - "3600"
+        volumeMounts:
+        - name: datapath
+          mountPath: /mnt  
+      
