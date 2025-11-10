@@ -1,0 +1,119 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wordpress-app
+
+# create database secrets
+#user: wordpress password: flectrag
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wordpress-db-secret
+  namespace: wordpress-app
+type: Opaque
+data:
+  password: ZmxlY3RyYWc=
+  user: d29yZHByZXNz
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: wordpress-db-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /kubedata/mysql
+    server: 172.31.11.245
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wordpress-db-data0
+  namespace: wordpress-app
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-db
+  namespace: wordpress-app
+  labels:
+    app: wordpress
+    apptype: database
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+      apptype: database
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        apptype: database
+    spec:
+      volumes:
+      - name:  dbdatastore
+        persistentVolumeClaim:
+          claimName: wordpress-db-data0
+      containers:
+      - name: mysql-app
+        image: mysql:latest
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wordpress-db-secret
+              key: password
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: wordpress-db-secret
+              key: user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wordpress-db-secret
+              key: password  
+        - name: MYSQL_DATABASE
+          value: wpdata          
+        resources:
+          requests: 
+            memory: "300Mi"
+            cpu: "500m"
+          limits:
+            memory: "500Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: dbdatastore
+          mountPath: /var/lib/mysql/
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-db-svc
+  namespace: wordpress-app
+spec:
+  selector:
+    app: wordpress
+  type: ClusterIP
+  ports:
+  - port: 3306
+    targetPort: 3306
