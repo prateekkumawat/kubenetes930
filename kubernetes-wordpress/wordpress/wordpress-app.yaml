@@ -71,7 +71,7 @@ spec:
         image: wordpress:latest
         env:
         - name: WORDPRESS_DB_HOST
-          value: wordpress-db-svc.worpress-app.svc.cluster.local
+          value: wordpress-db-svc.wordpress-app.svc.cluster.local
         - name: WORDPRESS_DB_USER
           valueFrom:
             secretKeyRef:
