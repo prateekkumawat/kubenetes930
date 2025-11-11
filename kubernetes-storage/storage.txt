@@ -1,0 +1,10 @@
+setup Ranchere Local-path Provisoner 
+
+apply below on your kubernetes cluster
+
+kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.32/deploy/local-path-storage.yaml
+
+for examplse check with yaml in this local-storage.yaml 
+
+
+for further examples use below links https://github.com/rancher/local-path-provisioner/blob/master/example
