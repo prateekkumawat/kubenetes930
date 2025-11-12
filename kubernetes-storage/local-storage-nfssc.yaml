@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nfsstore1 
+
+---
+# define your pvc for local-path-storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfsstore1-data0
+  namespace: nfsstore1
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-store
+
+  # define your pod creation 
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: local-store-pod
+  namespace: nfsstore1
+  labels:
+    app: local-storage
+spec:
+  volumes:
+  - name: local-vol
+    persistentVolumeClaim:
+      claimName: nfsstore1-data0
+  containers:
+  - name: local-store-pod
+    image: busybox:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    command:
+      - sleep
+      - "3600"
+    volumeMounts:
+    - name: local-vol
+      mountPath: /opt
