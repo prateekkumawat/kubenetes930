@@ -19,3 +19,26 @@ spec:
             name: apple
             port: 
               number: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: banana-ingress
+  namespace: default
+  labels:
+    app: banana
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/banana"
+        backend:
+          service:
+            name: apple
+            port: 
+              number: 80
