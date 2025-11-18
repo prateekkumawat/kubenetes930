@@ -39,6 +39,6 @@ spec:
         path: "/banana"
         backend:
           service:
-            name: apple
+            name: banana
             port: 
               number: 80
