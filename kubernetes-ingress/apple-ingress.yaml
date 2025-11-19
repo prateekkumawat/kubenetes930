@@ -58,6 +58,6 @@ spec:
         path: "/"
         backend:
           service:
-            name: apple
+            name: banana
             port: 
               number: 80            
