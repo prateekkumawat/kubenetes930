@@ -61,3 +61,27 @@ spec:
             name: banana
             port: 
               number: 80            
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: springapp-ingress
+  namespace: springapp
+  labels:
+    app: springapp
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: sprinapp.mgmt.ocelottraining.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: springapp-svc
+            port: 
+              number: 8080
