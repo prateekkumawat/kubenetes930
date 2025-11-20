@@ -85,3 +85,13 @@ spec:
             name: springapp-svc
             port: 
               number: 8080
+
+  - http:   
+      paths:
+      - pathType: Prefix
+        path: /users
+        backend:
+          service:
+            name: springapp-svc
+            port: 
+              number: 8080          
