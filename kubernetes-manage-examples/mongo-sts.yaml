@@ -13,10 +13,6 @@ spec:
       labels:
         app: mongoapp
     spec:
-      volumes:
-      - name: mongo-data
-        persistentVolumeClaim: 
-          claimName: mongo-data-pvc
       containers:
       - name: mogngoapp
         image: mongo:latest
@@ -24,13 +20,22 @@ spec:
         - containerPort: 27017
           name: mongo-port
         volumeMounts:
-        - name: mongo-data
-          mountPath: /data/db
+        - name: mongo-persistent-storage
+          mountPath: /data/db      
         env: 
         - name: MONGO_INITDB_ROOT_USERNAME
           value: mongouser 
         - name: MONGO_INITDB_ROOT_PASSWORD
-          value: flectrag123   
+          value: flectrag123 
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-persistent-storage
+      spec:
+        storageClassName: "nfa-storage-data"
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi          
 
 ---
 apiVersion: v1
