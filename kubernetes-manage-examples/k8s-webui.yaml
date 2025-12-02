@@ -30,3 +30,6 @@ metadata:
   annotations:
     kubernetes.io/service-account.name: "admin"   
 type: kubernetes.io/service-account-token 
+
+
+#kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 -d

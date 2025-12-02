@@ -1,0 +1,16 @@
+- You can constrain a Pod so that it is restricted to run on particular node(s), 
+or to prefer to run on particular nodes.
+- No of nodes are full in turm of usages of cpu ram and disk 
+- specific hardware and node selections 
+- sepration based on technologu product or management or any reaseon
+
+nodeSelector:::::
+nodeSelector is the simplest recommended form of node selection constraint.
+ You can add the nodeSelector field to your Pod specification and specify the node labels you want the target node to have. 
+
+# kubectl get node --show-labels
+ default labels ---- hostname os arch 
+
+ kubectl label node ip-172-31-32-115.ap-south-2.compute.internal pods_seclector_basis_app=mgmt 
+
+ labels key=value

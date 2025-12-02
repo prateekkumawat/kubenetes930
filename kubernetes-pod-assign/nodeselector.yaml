@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: appnode1
+  labels:
+    app.kubernetes.io/name: appnode1
+spec:
+  containers:
+  - name: appnode1
+    image: nginx:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+  nodeSelector:
+    pods_seclector_basis_app: mgmt
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: appnode2
+  labels:
+    app.kubernetes.io/name: appnode2
+spec:
+  containers:
+  - name: appnode2
+    image: nginx:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+  nodeSelector:
+    pods_seclector_basis_app: webapp
