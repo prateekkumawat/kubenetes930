@@ -14,3 +14,18 @@ nodeSelector is the simplest recommended form of node selection constraint.
  kubectl label node ip-172-31-32-115.ap-south-2.compute.internal pods_seclector_basis_app=mgmt 
 
  labels key=value
+
+ Affinity and anti-affinity    affinity is attract pods 
+nodeSelector is the simplest way to constrain Pods to nodes with specific labels. 
+Affinity and anti-affinity expand the types of constraints you can define. Some of the benefits of affinity and anti-affinity include:
+
+The affinity/anti-affinity language is more expressive. nodeSelector only selects nodes with all the specified labels. 
+Affinity/anti-affinity gives you more control over the selection logic.
+You can indicate that a rule is soft or preferred, so that the scheduler still schedules the Pod even 
+if it can't find a matching node.
+
+You can constrain a Pod using labels on other Pods running on the node 
+(or other topological domain), instead of just node labels, which allows you to define rules for which Pods can be co-located on a node.
+
+requiredDuringSchedulingIgnoredDuringExecution: The scheduler can't schedule the Pod unless the rule is met. 
+preferredDuringSchedulingIgnoredDuringExecution: The scheduler tries to find a node that meets the rule. If a matching node is not available, the scheduler still schedules the Pod.
