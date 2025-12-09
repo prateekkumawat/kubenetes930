@@ -1,0 +1,8 @@
+- Horizontal scaling means that the response to increased load is to deploy more Pods.  
+- HPA always suppors Deployment and ReplicaSet controllers STS
+- If the load decreases, and the number of Pods is above the configured minimum, the HorizontalPodAutoscaler instructs 
+  the workload resource (the Deployment, StatefulSet, or other similar resource) to scale back down.
+- HPA need metrics-server to be deployed in the cluster to get metrics about resource usage.
+- HPA can scale based on different metrics, such as CPU utilization, memory usage, or custom metrics.
+
+
